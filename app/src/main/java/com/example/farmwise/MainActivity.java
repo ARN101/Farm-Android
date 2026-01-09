@@ -20,5 +20,26 @@ public class MainActivity extends AppCompatActivity {
             v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom);
             return insets;
         });
+
+        findViewById(R.id.btnLivestock).setOnClickListener(v -> {
+            android.content.Intent intent = new android.content.Intent(MainActivity.this, LivestockActivity.class);
+            startActivity(intent);
+        });
+
+        findViewById(R.id.btnVaccination).setOnClickListener(v -> {
+            android.content.Intent intent = new android.content.Intent(MainActivity.this,
+                    VaccinationTrackerActivity.class);
+            startActivity(intent);
+        });
+
+        findViewById(R.id.btnFinance).setOnClickListener(v -> {
+            android.content.Intent intent = new android.content.Intent(MainActivity.this, FarmFinanceActivity.class);
+            startActivity(intent);
+        });
+
+        findViewById(R.id.btnProfile).setOnClickListener(v -> {
+            android.content.Intent intent = new android.content.Intent(MainActivity.this, FarmProfileActivity.class);
+            startActivity(intent);
+        });
     }
 }

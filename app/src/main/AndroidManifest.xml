@@ -20,6 +20,18 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+        <activity
+            android:name=".LivestockActivity"
+            android:parentActivityName=".MainActivity" />
+        <activity
+            android:name=".VaccinationTrackerActivity"
+            android:parentActivityName=".MainActivity" />
+        <activity
+            android:name=".FarmFinanceActivity"
+            android:parentActivityName=".MainActivity" />
+        <activity
+            android:name=".FarmProfileActivity"
+            android:parentActivityName=".MainActivity" />
     </application>
 
 </manifest>
