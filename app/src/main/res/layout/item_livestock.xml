@@ -1,0 +1,60 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:background="?android:attr/selectableItemBackground"
+    android:orientation="horizontal"
+    android:padding="12dp">
+
+    <TextView
+        android:id="@+id/textId"
+        android:layout_width="40dp"
+        android:layout_height="wrap_content"
+        android:text="1"
+        android:textColor="#757575"
+        android:textSize="14sp" />
+
+    <TextView
+        android:id="@+id/textType"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_weight="1"
+        android:text="Cow"
+        android:textColor="#212121"
+        android:textSize="14sp" />
+
+    <TextView
+        android:id="@+id/textName"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_weight="1"
+        android:text="Bella"
+        android:textColor="#212121"
+        android:textSize="14sp" />
+
+    <TextView
+        android:id="@+id/textBreed"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_weight="1"
+        android:text="Holstein"
+        android:textColor="#212121"
+        android:textSize="14sp" />
+
+    <TextView
+        android:id="@+id/textAge"
+        android:layout_width="40dp"
+        android:layout_height="wrap_content"
+        android:text="3"
+        android:textColor="#212121"
+        android:textSize="14sp" />
+
+    <TextView
+        android:id="@+id/textHealth"
+        android:layout_width="60dp"
+        android:layout_height="wrap_content"
+        android:text="Healthy"
+        android:textColor="@color/livestock_green"
+        android:textSize="14sp" />
+
+</LinearLayout>
