@@ -55,16 +55,14 @@ public class LivestockAdapter extends RecyclerView.Adapter<LivestockAdapter.View
         holder.textAge.setText(String.valueOf(livestock.getAge()));
         holder.textHealth.setText(livestock.getHealth());
 
-        // Highlight logic
         if (holder.itemView instanceof com.google.android.material.card.MaterialCardView) {
             com.google.android.material.card.MaterialCardView cardView = (com.google.android.material.card.MaterialCardView) holder.itemView;
             if (selectedPosition == position) {
-                cardView.setCardBackgroundColor(android.graphics.Color.parseColor("#E0E0E0")); // Light Gray Highlight
+                cardView.setCardBackgroundColor(android.graphics.Color.parseColor("#E0E0E0"));
             } else {
                 cardView.setCardBackgroundColor(android.graphics.Color.WHITE);
             }
         } else {
-            // Fallback if not card view, though xml says it is
             if (selectedPosition == position) {
                 holder.itemView.setBackgroundColor(android.graphics.Color.parseColor("#E0E0E0"));
             } else {

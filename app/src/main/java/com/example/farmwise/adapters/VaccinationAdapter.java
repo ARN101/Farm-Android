@@ -74,17 +74,16 @@ public class VaccinationAdapter extends RecyclerView.Adapter<VaccinationAdapter.
             holder.textStatus.setTextColor(Color.parseColor("#388E3C"));
         }
 
-        // Highlight logic
         if (holder.itemView instanceof com.google.android.material.card.MaterialCardView) {
             com.google.android.material.card.MaterialCardView cardView = (com.google.android.material.card.MaterialCardView) holder.itemView;
             if (selectedPosition == position) {
-                cardView.setCardBackgroundColor(Color.parseColor("#E0E0E0")); // Light Gray Highlight
+                cardView.setCardBackgroundColor(Color.parseColor("#E0E0E0"));
             } else {
                 cardView.setCardBackgroundColor(Color.WHITE);
             }
         } else {
             if (selectedPosition == position) {
-                holder.itemView.setBackgroundColor(Color.parseColor("#E0E0E0")); // Light Gray Highlight
+                holder.itemView.setBackgroundColor(Color.parseColor("#E0E0E0"));
             } else {
                 holder.itemView.setBackgroundColor(Color.WHITE);
             }

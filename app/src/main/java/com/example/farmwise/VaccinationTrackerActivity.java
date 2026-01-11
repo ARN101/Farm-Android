@@ -200,7 +200,6 @@ public class VaccinationTrackerActivity extends AppCompatActivity {
 
     private String calculateStatus(Date nextDueDate) {
         Calendar today = Calendar.getInstance();
-        // Reset time to midnight for accurate day comparison
         today.set(Calendar.HOUR_OF_DAY, 0);
         today.set(Calendar.MINUTE, 0);
         today.set(Calendar.SECOND, 0);
