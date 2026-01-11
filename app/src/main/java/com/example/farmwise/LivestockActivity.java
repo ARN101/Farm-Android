@@ -55,20 +55,10 @@ public class LivestockActivity extends AppCompatActivity {
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
         recyclerView.setAdapter(adapter);
 
-        adapter.setOnItemClickListener(livestock -> {
+        adapter.setOnItemClickListener((livestock, position) -> {
             selectedLivestock = livestock;
-            editType.setText(livestock.getType());
-            editName.setText(livestock.getName());
-            editBreed.setText(livestock.getBreed());
-            editAge.setText(String.valueOf(livestock.getAge()));
-
-            for (int i = 0; i < healthOptions.length; i++) {
-                if (healthOptions[i].equals(livestock.getHealth())) {
-                    spinnerHealth.setSelection(i);
-                    break;
-                }
-            }
-            Toast.makeText(this, "Selected: " + livestock.getName(), Toast.LENGTH_SHORT).show();
+            adapter.setSelectedPosition(position);
+            Toast.makeText(this, "Selected for deletion", Toast.LENGTH_SHORT).show();
         });
 
         btnAdd.setOnClickListener(v -> addLivestock());
@@ -133,6 +123,7 @@ public class LivestockActivity extends AppCompatActivity {
                     Toast.makeText(this, "Animal Deleted", Toast.LENGTH_SHORT).show();
                     clearInputs();
                     selectedLivestock = null;
+                    adapter.setSelectedPosition(RecyclerView.NO_POSITION);
                 })
                 .addOnFailureListener(e -> Toast.makeText(this, "Error deleting animal", Toast.LENGTH_SHORT).show());
     }

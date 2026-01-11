@@ -70,16 +70,10 @@ public class VaccinationTrackerActivity extends AppCompatActivity {
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
         recyclerView.setAdapter(adapter);
 
-        adapter.setOnItemClickListener(vaccination -> {
+        adapter.setOnItemClickListener((vaccination, position) -> {
             selectedVaccination = vaccination;
-            editVaccineName.setText(vaccination.getVaccineName());
-            editNotes.setText(vaccination.getNotes());
-            if (vaccination.getDateGiven() != null)
-                editDateGiven.setText(dateFormat.format(vaccination.getDateGiven().toDate()));
-            if (vaccination.getNextDueDate() != null)
-                editNextDueDate.setText(dateFormat.format(vaccination.getNextDueDate().toDate()));
-
-            Toast.makeText(this, "Selected Record", Toast.LENGTH_SHORT).show();
+            adapter.setSelectedPosition(position);
+            Toast.makeText(this, "Selected for deletion", Toast.LENGTH_SHORT).show();
         });
 
         editDateGiven.setOnClickListener(v -> showDatePicker(editDateGiven, dateGivenCal));
@@ -153,16 +147,7 @@ public class VaccinationTrackerActivity extends AppCompatActivity {
 
         String status = "Completed";
         if (tsDue != null) {
-            Date now = new Date();
-            long diff = nextDueCal.getTimeInMillis() - now.getTime();
-            long days = diff / (1000 * 60 * 60 * 24);
-
-            if (days < 0)
-                status = "Overdue";
-            else if (days <= 7)
-                status = "Due Soon";
-            else
-                status = "Completed";
+            status = calculateStatus(tsDue.toDate());
         }
 
         Vaccination record = new Vaccination(selectedAnimal.toString(), vaccine,
@@ -187,6 +172,7 @@ public class VaccinationTrackerActivity extends AppCompatActivity {
                     Toast.makeText(this, "Record Deleted", Toast.LENGTH_SHORT).show();
                     clearInputs();
                     selectedVaccination = null;
+                    adapter.setSelectedPosition(RecyclerView.NO_POSITION);
                 })
                 .addOnFailureListener(e -> Toast.makeText(this, "Error deleting record", Toast.LENGTH_SHORT).show());
     }
@@ -210,5 +196,34 @@ public class VaccinationTrackerActivity extends AppCompatActivity {
         editNotes.setText("");
         if (!livestockList.isEmpty())
             spinnerAnimalId.setSelection(0);
+    }
+
+    private String calculateStatus(Date nextDueDate) {
+        Calendar today = Calendar.getInstance();
+        // Reset time to midnight for accurate day comparison
+        today.set(Calendar.HOUR_OF_DAY, 0);
+        today.set(Calendar.MINUTE, 0);
+        today.set(Calendar.SECOND, 0);
+        today.set(Calendar.MILLISECOND, 0);
+
+        Calendar due = Calendar.getInstance();
+        due.setTime(nextDueDate);
+        due.set(Calendar.HOUR_OF_DAY, 0);
+        due.set(Calendar.MINUTE, 0);
+        due.set(Calendar.SECOND, 0);
+        due.set(Calendar.MILLISECOND, 0);
+
+        if (due.before(today)) {
+            return "Overdue";
+        }
+
+        long diffMillis = due.getTimeInMillis() - today.getTimeInMillis();
+        long days = diffMillis / (24 * 60 * 60 * 1000);
+
+        if (days <= 7) {
+            return "Due Soon";
+        } else {
+            return "Scheduled";
+        }
     }
 }

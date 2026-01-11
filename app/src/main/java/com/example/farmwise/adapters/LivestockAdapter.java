@@ -14,9 +14,10 @@ public class LivestockAdapter extends RecyclerView.Adapter<LivestockAdapter.View
 
     private List<Livestock> livestockList;
     private OnItemClickListener listener;
+    private int selectedPosition = RecyclerView.NO_POSITION;
 
     public interface OnItemClickListener {
-        void onItemClick(Livestock livestock);
+        void onItemClick(Livestock livestock, int position);
     }
 
     public void setOnItemClickListener(OnItemClickListener listener) {
@@ -29,6 +30,11 @@ public class LivestockAdapter extends RecyclerView.Adapter<LivestockAdapter.View
 
     public void updateList(List<Livestock> newList) {
         livestockList = newList;
+        notifyDataSetChanged();
+    }
+
+    public void setSelectedPosition(int position) {
+        selectedPosition = position;
         notifyDataSetChanged();
     }
 
@@ -49,9 +55,26 @@ public class LivestockAdapter extends RecyclerView.Adapter<LivestockAdapter.View
         holder.textAge.setText(String.valueOf(livestock.getAge()));
         holder.textHealth.setText(livestock.getHealth());
 
+        // Highlight logic
+        if (holder.itemView instanceof com.google.android.material.card.MaterialCardView) {
+            com.google.android.material.card.MaterialCardView cardView = (com.google.android.material.card.MaterialCardView) holder.itemView;
+            if (selectedPosition == position) {
+                cardView.setCardBackgroundColor(android.graphics.Color.parseColor("#E0E0E0")); // Light Gray Highlight
+            } else {
+                cardView.setCardBackgroundColor(android.graphics.Color.WHITE);
+            }
+        } else {
+            // Fallback if not card view, though xml says it is
+            if (selectedPosition == position) {
+                holder.itemView.setBackgroundColor(android.graphics.Color.parseColor("#E0E0E0"));
+            } else {
+                holder.itemView.setBackgroundColor(android.graphics.Color.WHITE);
+            }
+        }
+
         holder.itemView.setOnClickListener(v -> {
             if (listener != null) {
-                listener.onItemClick(livestock);
+                listener.onItemClick(livestock, holder.getAdapterPosition());
             }
         });
     }

@@ -80,21 +80,10 @@ public class FarmFinanceActivity extends AppCompatActivity {
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
         recyclerView.setAdapter(adapter);
 
-        adapter.setOnItemClickListener(finance -> {
+        adapter.setOnItemClickListener((finance, position) -> {
             selectedFinance = finance;
-            editCategory.setText(finance.getCategory());
-            editAmount.setText(String.valueOf(finance.getAmount()));
-            editNotes.setText(finance.getNotes());
-            if (finance.getDate() != null)
-                editDate.setText(dateFormat.format(finance.getDate().toDate()));
-
-            String navType = finance.getType();
-            if (navType.equals("Income"))
-                spinnerType.setSelection(0);
-            else
-                spinnerType.setSelection(1);
-
-            Toast.makeText(this, "Selected Record", Toast.LENGTH_SHORT).show();
+            adapter.setSelectedPosition(position);
+            Toast.makeText(this, "Selected for deletion", Toast.LENGTH_SHORT).show();
         });
 
         editDate.setOnClickListener(v -> showDatePicker());
@@ -208,6 +197,7 @@ public class FarmFinanceActivity extends AppCompatActivity {
                     Toast.makeText(this, "Record Deleted", Toast.LENGTH_SHORT).show();
                     clearInputs();
                     selectedFinance = null;
+                    adapter.setSelectedPosition(RecyclerView.NO_POSITION);
                 })
                 .addOnFailureListener(e -> Toast.makeText(this, "Error deleting record", Toast.LENGTH_SHORT).show());
     }
